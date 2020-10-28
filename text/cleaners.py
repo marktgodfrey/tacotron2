@@ -88,3 +88,17 @@ def english_cleaners(text):
   text = expand_abbreviations(text)
   text = collapse_whitespace(text)
   return text
+
+
+_symbol_map = {u'… ': '. ',
+               u'…$': '.',
+               u'…': ' ',
+               ' - ': '. ',  #regular dash
+               u'— ': '. ',  #\u2014
+               u' – ': ', ', #\u2013
+               u'—$': '.'}   #\u2014
+
+def hooked_cleaners(text):
+  for r in _symbol_map:
+    text = re.sub(r, _symbol_map[r], text)
+  return text
